@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions targetNamespace="urn:lloguers" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="urn:lloguers" xmlns:intf="urn:lloguers" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+   <message name="llogaRequest">
+
+      <part name="in0" type="xsd:string"/>
+
+      <part name="in1" type="xsd:string"/>
+
+      <part name="in2" type="xsd:int"/>
+
+      <part name="in3" type="xsd:int"/>
+
+      <part name="in4" type="xsd:int"/>
+
+      <part name="in5" type="xsd:double"/>
+
+   </message>
+
+   <message name="llistaLloguersRequest">
+
+      <part name="in0" type="xsd:string"/>
+
+      <part name="in1" type="xsd:string"/>
+
+   </message>
+
+   <message name="llistaLloguersResponse">
+
+      <part name="llistaLloguersReturn" type="xsd:base64Binary"/>
+
+   </message>
+
+   <message name="llogaResponse">
+
+      <part name="llogaReturn" type="xsd:int"/>
+
+   </message>
+
+   <portType name="Lloguers">
+
+      <operation name="lloga" parameterOrder="in0 in1 in2 in3 in4 in5">
+
+         <input message="impl:llogaRequest" name="llogaRequest"/>
+
+         <output message="impl:llogaResponse" name="llogaResponse"/>
+
+      </operation>
+
+      <operation name="llistaLloguers" parameterOrder="in0 in1">
+
+         <input message="impl:llistaLloguersRequest" name="llistaLloguersRequest"/>
+
+         <output message="impl:llistaLloguersResponse" name="llistaLloguersResponse"/>
+
+      </operation>
+
+   </portType>
+
+   <binding name="lloguersSoapBinding" type="impl:Lloguers">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <operation name="lloga">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <input name="llogaRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:lloguers" use="encoded"/>
+
+         </input>
+
+         <output name="llogaResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:lloguers" use="encoded"/>
+
+         </output>
+
+      </operation>
+
+      <operation name="llistaLloguers">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <input name="llistaLloguersRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:lloguers" use="encoded"/>
+
+         </input>
+
+         <output name="llistaLloguersResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:lloguers" use="encoded"/>
+
+         </output>
+
+      </operation>
+
+   </binding>
+
+   <service name="LloguersService">
+
+      <port binding="impl:lloguersSoapBinding" name="lloguers">
+
+         <wsdlsoap:address location="http://localhost:8000/axis/services/lloguers"/>
+
+      </port>
+
+   </service>
+
+</definitions>

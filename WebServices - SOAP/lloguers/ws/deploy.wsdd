@@ -1,0 +1,37 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from LloguersService WSDL service -->
+
+  <service name="lloguers" provider="java:RPC" style="rpc" use="encoded">
+      <parameter name="wsdlTargetNamespace" value="urn:lloguers"/>
+      <parameter name="wsdlServiceElement" value="LloguersService"/>
+      <parameter name="wsdlServicePort" value="lloguers"/>
+      <parameter name="className" value="lloguers.ws.LloguersSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="Lloguers"/>
+      <operation name="lloga" qname="operNS:lloga" xmlns:operNS="urn:lloguers" returnQName="llogaReturn" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" >
+        <parameter name="in0" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter name="in1" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter name="in2" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter name="in3" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter name="in4" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter name="in5" type="tns:double" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="llistaLloguers" qname="operNS:llistaLloguers" xmlns:operNS="urn:lloguers" returnQName="llistaLloguersReturn" returnType="rtns:base64Binary" xmlns:rtns="http://www.w3.org/2001/XMLSchema" >
+        <parameter name="in0" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter name="in1" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="llistaLloguers lloga"/>
+      <parameter name="scope" value="Session"/>
+
+  </service>
+</deployment>

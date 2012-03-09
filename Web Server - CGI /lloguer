@@ -1,0 +1,82 @@
+#!/usr/bin/perl
+use strict;
+use Switch;
+
+# Llibreries 
+use CGI qw(:standard);
+use CGI::Carp qw(warningsToBrowser fatalsToBrowser);
+
+
+
+# Funcions
+sub print_order{
+
+print "<TITLE>Realitzar Lloguer</TITLE>\n";
+print "<H1>Comprovant del Lloguer</H1>\n";
+
+
+print "<table>\n";
+print "<tr><td><b>Model del Vehicle:</b></td>\n";
+print "<td>$_[0]</td></tr>\n";
+print "<tr><td><b>Tipus de motor:</b></td>\n";
+print "<td>$_[1]</td>\n";
+print "</tr>\n";
+print "<tr><td><b>Dies del lloguer:</b></td>\n";
+print "<td>$_[2]</td></tr>\n";
+print "<tr><td><b>Quantitat de vehicles:</b></td>\n";
+print "<td>$_[3]</td></tr>\n";
+print "<tr><td><b>Descompte(%):</b></td>\n";
+print "<td>$_[4]</td></tr>\n";
+print "</table>\n";
+print "<HR>\n";
+print "<b>Import total:</b> $_[5] euros.\n";
+print "<br /><br /><a href='http://localhost/main.html'>Tornar a la plana principal</a>\n";
+
+
+
+}
+
+sub print_error{
+print "<TITLE>Realitzar Lloguer</TITLE>\n";
+print "<notice>Error: no heu introduit un valor de $_[0] valid</notice>\n";
+print "<br /><br /><a href='http://localhost/main.html'>Tornar a la plana principal</a>\n";
+exit;
+}
+
+print "Content-type: text/html\n\n";
+
+if (param())
+{
+	my $model = param('model_vehicle');
+	my $submodel = param('sub_model_vehicle');
+	my $dies = param('dies_lloguer');
+	my $numv = param('num_vehicles');
+	my $desc = param('descompte');
+
+	if (!$model) {&print_error("model de vehicle");}
+	if (!$submodel) {&print_error("submodel de vehicle");}
+	if ((!$dies)||($dies<1)) {&print_error("dies de lloguer");}
+  	if ((!$numv)||($numv<1)) {&print_error("nombre de vehicles");}
+	if ((!$desc)||($desc>1)||($desc<0)) {&print_error("descompte");}
+	
+	
+	my $subtotal = ($model * $dies * $numv);
+	my $total = $subtotal - ($subtotal * $desc);
+
+	open FILEHANDLE, "+>>", "$ENV{'DOCUMENT_ROOT'}/lloguers.txt" or die $!;
+
+	switch ($model) {
+	  case 54 { $model = "Economic" }
+	  case 71 { $model = "Semi-Luxe" }
+	  case 82 { $model = "Luxe" }
+	  case 139 { $model = "Limusina" }
+	}
+	
+	print FILEHANDLE "$model:$submodel:$dies:$numv:$desc:$total\n";
+	close FILEHANDLE;
+	&print_order($model,$submodel,$dies,$numv,$desc,$total);
+}
+
+
+
+

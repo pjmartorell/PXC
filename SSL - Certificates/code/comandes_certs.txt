@@ -1,0 +1,70 @@
+<<--------CERTIFICAT SERVIDOR---------->>
+
+keytool -genkey -alias SecureServer -keyalg RSA -keypass serverkspw -storepass serverkspw -keystore certs
+      What is your first and last name?
+	[Unknown]:  localhost
+      What is the name of your organizational unit?
+	[Unknown]:  pxc
+      What is the name of your organization?
+	[Unknown]:  fib
+      What is the name of your City or Locality?
+	[Unknown]:  Barcelona
+      What is the name of your State or Province?
+	[Unknown]:  Catalunya
+      What is the two-letter country code for this unit?
+	[Unknown]:  CA
+      Is CN=localhost, OU=pxc, O=fib, L=Barcelona, ST=Catalunya, C=CA correct?
+	[no]:  yes
+
+keytool -export -alias SecureServer -storepass serverkspw -file server.cer -keystore certs
+      Certificate stored in file <server.cer>
+
+keytool -import -v -trustcacerts -alias SecureServer -file server.cer -keystore cacerts.jks -keypass serverkspw -storepass serverkspw
+      Owner: CN=localhost, OU=pxc, O=fib, L=Barcelona, ST=Catalunya, C=CA
+      Issuer: CN=localhost, OU=pxc, O=fib, L=Barcelona, ST=Catalunya, C=CA
+      Serial number: 4af2f763
+      Valid from: Thu Nov 05 17:03:47 CET 2009 until: Wed Feb 03 17:03:47 CET 2010
+      Certificate fingerprints:
+	      MD5:  9E:07:5D:27:FD:BE:B4:5E:E5:81:54:29:0E:AD:AC:0C
+	      SHA1: 81:60:43:F5:A6:CF:F1:48:DC:B0:33:29:82:4A:2A:D9:12:A9:05:C5
+	      Signature algorithm name: SHA1withRSA
+	      Version: 3
+      Trust this certificate? [no]:  yes
+      Certificate was added to keystore
+      [Storing cacerts.jks]
+
+
+<<----------CERTIFICAT CLIENT---------->>
+
+keytool -genkey -alias SecureBrowser -keyalg RSA -keypass serverkspw -storepass serverkspw -keystore clientcerts
+      What is your first and last name?
+	[Unknown]:  localhost
+      What is the name of your organizational unit?
+	[Unknown]:  pxc
+      What is the name of your organization?
+	[Unknown]:  fib
+      What is the name of your City or Locality?
+	[Unknown]:  Tarragona
+      What is the name of your State or Province?
+	[Unknown]:  Catalunya
+      What is the two-letter country code for this unit?
+	[Unknown]:  CA
+      Is CN=localhost, OU=pxc, O=fib, L=Tarragona, ST=Catalunya, C=CA correct?
+	[no]:  yes
+
+keytool -export -alias SecureBrowser -storepass serverkspw -file client.cer -keystore clientcerts
+      Certificate stored in file <client.cer>
+
+keytool -import -v -trustcacerts -alias SecureBrowser -file client.cer -keystore clientcerts.jks -keypass serverkspw -storepass serverkspw
+      Owner: CN=localhost, OU=pxc, O=fib, L=Tarragona, ST=Catalunya, C=CA
+      Issuer: CN=localhost, OU=pxc, O=fib, L=Tarragona, ST=Catalunya, C=CA
+      Serial number: 4af2ff7c
+      Valid from: Thu Nov 05 17:38:20 CET 2009 until: Wed Feb 03 17:38:20 CET 2010
+      Certificate fingerprints:
+	      MD5:  40:3C:86:FA:74:9E:DD:5E:4F:42:8F:12:52:39:3A:F2
+	      SHA1: F4:59:98:1B:1B:44:58:EA:3C:84:BA:E7:77:95:FE:03:51:53:05:77
+	      Signature algorithm name: SHA1withRSA
+	      Version: 3
+      Trust this certificate? [no]:  yes
+      Certificate was added to keystore
+      [Storing cacerts.jks]

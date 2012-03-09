@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<llistaLloguers>
+  <!--Caracteristiques del lloguer-->
+  <lloguer>
+    <model>Luxe</model>
+    <submodel>Gasolina</submodel>
+    <dies_lloguer>14</dies_lloguer>
+    <num_vehicles>1</num_vehicles>
+    <desc>39</desc>
+    <total>811.3</total>
+  </lloguer>
+</llistaLloguers>
+
